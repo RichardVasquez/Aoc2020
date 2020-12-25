@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AdventOfCode2020Solver.Data;
 using AdventOfCode2020Solver.Internal;
 using AdventOfCode2020Solver.Solvers;
 
@@ -14,9 +15,11 @@ namespace AdventOfCode2020Solver
             var numbers = args.ToInts();
             if (numbers.Count == 0)
             {
-                numbers = Enumerable.Range(SolverLookup.Min, SolverLookup.Count).ToList();
+                numbers = Enumerable.Range(SolverLookup.ProblemMin, SolverLookup.ProblemCount).ToList();
             }
 
+            var d1 = new Data01();
+            
             Banner(numbers);
             Solve(numbers);
         }
