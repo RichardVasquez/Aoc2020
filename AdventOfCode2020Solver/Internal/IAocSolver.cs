@@ -2,6 +2,9 @@ namespace AdventOfCode2020Solver.Internal
 {
     public interface IAocSolver
     {
-        void Process(int problem);
+        public void AddData(IData data);
+        public string SolvePart1();
+        public string SolvePart2();
+        public void Solve();
     }
 }

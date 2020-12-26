@@ -1,12 +1,11 @@
 using System.Collections.Generic;
+using AdventOfCode2020Solver.Internal;
 
 namespace AdventOfCode2020Solver.Data
 {
     public class Data01 : AbstractData, IData
     {
-        public Data01():base(MyData)
-        {
-        }
+        public Data01() : base(MyData) { }
 
         private static readonly List<string> MyData =
             new List<string>

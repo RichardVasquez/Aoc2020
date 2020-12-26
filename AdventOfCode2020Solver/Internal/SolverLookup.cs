@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using AdventOfCode2020Solver.Data;
 using AdventOfCode2020Solver.Internal;
 
@@ -35,7 +36,7 @@ namespace AdventOfCode2020Solver.Solvers
             return (ProblemLookup[index] != null) & HasData(index);
         }
 
-        public static bool HasData(int index)
+        private static bool HasData(int index)
         {
             if (!DataLookup.ContainsKey(index))
             {
@@ -44,12 +45,31 @@ namespace AdventOfCode2020Solver.Solvers
 
             return DataLookup[index] != null;
         }
+
+        private static IData GetData(int index)
+        {
+            return HasData(index)
+                       ? (IData) Activator.CreateInstance(DataLookup[index])
+                       : null;
+        }
+            
         
         public static IAocSolver GetSolver(int index)
         {
-            return HasSolver(index)
-                       ? (IAocSolver) Activator.CreateInstance(ProblemLookup[index], index) 
-                       : null;
+            if (!HasSolver(index) || !HasData(index))
+            {
+                return null;
+            }
+
+            var data = GetData(index);
+            var solver = (IAocSolver) Activator
+               .CreateInstance
+                    (
+                     ProblemLookup[index],
+                     index
+                    );
+            solver.AddData(data);
+            return solver;
         }
     }
 }
