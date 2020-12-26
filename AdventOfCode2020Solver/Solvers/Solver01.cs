@@ -10,19 +10,21 @@ namespace AdventOfCode2020Solver.Solvers
     {
         private List<long> _numbers;
         private const long BaseValue = 2020;
-        
-        public Solver01(int n) : base(n)
-        {
-        }
+
+        public Solver01(int n) : base(n) { }
 
         public override void Solve()
         {
             _numbers = ProblemData.Get().ToLines(true).Select(l => Convert.ToInt64(l)).ToList();
+
+            SolveOnce(SolvePart1);
+            SolveOnce(SolvePart2);
+            
             Console.WriteLine(SolvePart1());
             Console.WriteLine(SolvePart2());
         }
 
-        public sealed override string SolvePart1()
+        private string SolvePart1()
         {
             foreach (long index in _numbers.Where(idx => _numbers.Contains(BaseValue - idx)))
             {
@@ -31,8 +33,8 @@ namespace AdventOfCode2020Solver.Solvers
 
             return "Not Found";
         }
-        
-        public sealed override string SolvePart2()
+
+        private string SolvePart2()
         {
             foreach (long index1 in _numbers)
             {

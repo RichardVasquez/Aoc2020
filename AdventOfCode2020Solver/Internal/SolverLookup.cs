@@ -13,13 +13,18 @@ namespace AdventOfCode2020Solver.Solvers
             new Dictionary<int, Type>
             {
                 {1, typeof(Solver01)},
-                {2, typeof(Solver02)}
+                {2, typeof(Solver02)},
+                {3, typeof(Solver03)},
+                {4, typeof(Solver04)}
             };
 
         private static readonly Dictionary<int, Type> DataLookup =
             new Dictionary<int, Type>
             {
-                {1, typeof(Data01)}
+                {1, typeof(Data01)},
+                {2, typeof(Data02)},
+                {3, typeof(Data03)},
+                {4, typeof(Data04)}
             };
 
         public static int ProblemMin => ProblemLookup.Keys.Min();

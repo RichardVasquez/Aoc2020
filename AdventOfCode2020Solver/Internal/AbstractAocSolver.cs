@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using AdventOfCode2020Solver.Data;
 
 namespace AdventOfCode2020Solver.Internal
@@ -8,9 +10,14 @@ namespace AdventOfCode2020Solver.Internal
         public int Index;
         public IData ProblemData;
 
+        public List<string> Answers;
+        public List<long> Milliseconds;
+
         protected AbstractAocSolver(int i)
         {
             Index = i;
+            Answers = new List<string>();
+            Milliseconds = new List<long>();
         }
 
         public void AddData(IData data)
@@ -18,12 +25,7 @@ namespace AdventOfCode2020Solver.Internal
             ProblemData = data;
         }
 
-        public virtual string SolvePart1()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual string SolvePart2()
+        public void SolveOnce()
         {
             throw new NotImplementedException();
         }
@@ -31,6 +33,15 @@ namespace AdventOfCode2020Solver.Internal
         public virtual void Solve()
         {
             throw new NotImplementedException();
+        }
+
+        public virtual void SolveOnce(Func<string> solver)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            Answers.Add(solver());
+            sw.Stop();
+            Milliseconds.Add(sw.ElapsedMilliseconds);
         }
     }
 }
