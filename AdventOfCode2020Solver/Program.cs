@@ -18,7 +18,7 @@ namespace AdventOfCode2020Solver
                 numbers = Enumerable.Range(SolverLookup.ProblemMin, SolverLookup.ProblemCount).ToList();
             }
 
-            var s4 = SolverLookup.GetSolver(4);
+            var s4 = SolverLookup.GetSolver(15);
             s4.Solve();
 
             var d1 = new Data01();
