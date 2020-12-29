@@ -17,7 +17,7 @@ There's some rewrites after looking at other people's code over the past week th
 in other languages such as C or Python.  I learned a few things from them, and it crept into my C#
 as I switched from 25 individual projects into this monolith.
 
-##Output
+## Output
 
 ```text
 ----------------------------------------------------------------------
