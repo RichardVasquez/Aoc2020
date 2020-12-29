@@ -184,4 +184,4 @@ I was _tired_ when I did some of these, so there's splat code all over the place
 was grinding out a solution.  I also created this simple framework to hang data/solvers on
 and so there's lots of copypasta then back tracking to make the old code work in the new
 layout.  At the very least, I got back to the proper answers with this new structure.  I
-may come back to some of these and uddate them in the future.
+may come back to some of these and update them in the future.
