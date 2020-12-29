@@ -9,6 +9,7 @@ namespace AdventOfCode2020Solver.Internal
     {
         public int Index;
         public IData ProblemData;
+        public string Title;
 
         public List<string> Answers;
         public List<long> Milliseconds;
@@ -32,7 +33,6 @@ namespace AdventOfCode2020Solver.Internal
 
         public virtual void Solve()
         {
-            throw new NotImplementedException();
         }
 
         public virtual void SolveOnce(Func<string> solver)
@@ -42,6 +42,38 @@ namespace AdventOfCode2020Solver.Internal
             Answers.Add(solver());
             sw.Stop();
             Milliseconds.Add(sw.ElapsedMilliseconds);
+        }
+
+        public string GetTitle()
+        {
+            return Title;
+        }
+
+        public void SetTitle(string s)
+        {
+            Title = s;
+        }
+
+        public virtual string SolvePart1()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual string SolvePart2()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual List<string> GetResults()
+        {
+            var results = new List<string>();
+            for (var i = 0; i < Answers.Count; i++)
+            {
+                results.Add(Answers[i]);
+                results.Add(Milliseconds[i].ToString());
+            }
+
+            return results;
         }
     }
 }

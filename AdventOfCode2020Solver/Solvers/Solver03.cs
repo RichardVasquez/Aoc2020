@@ -9,6 +9,7 @@ namespace AdventOfCode2020Solver.Solvers
     public class Solver03 : AbstractAocSolver
     {
         private List<string> _mapData;
+
         public Solver03(int i) : base(i) { }
         public override void Solve()
         {
@@ -16,11 +17,9 @@ namespace AdventOfCode2020Solver.Solvers
 
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             var x = 0;
             var trees = 0;
@@ -38,23 +37,23 @@ namespace AdventOfCode2020Solver.Solvers
             return $"{trees}";
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
-            var xVals = new List<int> {1, 3, 5, 7, 1};
-            var yVals = new List<int> {1, 1, 1, 1, 2};
+            var xValues = new List<int> {1, 3, 5, 7, 1};
+            var yValues = new List<int> {1, 1, 1, 1, 2};
             var treesHit = new List<int> {0, 0, 0, 0, 0};
 
-            for (var i = 0; i < xVals.Count; i++)
+            for (var i = 0; i < xValues.Count; i++)
             {
                 var x = 0;
-                for (var y = 0; y < _mapData.Count; y += yVals[i])
+                for (var y = 0; y < _mapData.Count; y += yValues[i])
                 {
                     if (_mapData[y][x] == '#')
                     {
                         treesHit[i]++;
                     }
 
-                    x += xVals[i];
+                    x += xValues[i];
                     x %= _mapData[0].Length;
                 }
             }

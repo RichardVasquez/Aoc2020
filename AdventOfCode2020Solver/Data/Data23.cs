@@ -10,7 +10,7 @@ namespace AdventOfCode2020Solver.Data
         private static readonly List<string> MyData =
             new List<string>
             {
-                "),S@Y,3(U-#8W",
+                ")-C0S-S$Y,C4X",
                 "`"
             };
     }

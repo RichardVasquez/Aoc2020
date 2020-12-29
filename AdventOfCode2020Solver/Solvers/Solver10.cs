@@ -8,27 +8,23 @@ namespace AdventOfCode2020Solver.Solvers
 {
     public class Solver10 : AbstractAocSolver, IAocSolver
     {
-
-        public List<int> Jolts;
+        private List<int> _jolts;
         public Solver10(int n) : base(n) { }
 
         public override void Solve()
         {
-            Jolts = ProblemData.Get().ToLines(true).Select(l => Convert.ToInt32(l)).ToList();
-            Jolts.Add(0);
-            Jolts.Sort();
-            Jolts.Add(Jolts.Last() + 3);
+            _jolts = ProblemData.Get().ToLines(true).Select(l => Convert.ToInt32(l)).ToList();
+            _jolts.Add(0);
+            _jolts.Sort();
+            _jolts.Add(_jolts.Last() + 3);
             
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
-            var myJolts = new List<int>(Jolts);
+            var myJolts = new List<int>(_jolts);
             myJolts.Reverse();
 
             int count1 = 0;
@@ -51,17 +47,17 @@ namespace AdventOfCode2020Solver.Solvers
             return $"{count1 * count3}";
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             var memo = new Dictionary<int, long>
                        {
-                           [Jolts.Count - 1] = 1
+                           [_jolts.Count - 1] = 1
                        };
 
-            for(int k = Jolts.Count - 2; k >= 0; k--)
+            for(int k = _jolts.Count - 2; k >= 0; k--)
             {
                 long currentCount = 0;
-                for(int connected = k + 1; connected < Jolts.Count() && Jolts[connected] - Jolts[k] <= 3; connected++)
+                for(int connected = k + 1; connected < _jolts.Count() && _jolts[connected] - _jolts[k] <= 3; connected++)
                 {
                     currentCount += memo[connected];
                 }

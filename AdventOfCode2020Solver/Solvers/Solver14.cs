@@ -19,22 +19,20 @@ namespace AdventOfCode2020Solver.Solvers
             _data = ProblemData.Get().ToLines(true).ToList();
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             _memory.Clear();
-            var mask = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
-            var maskAnd = MakeAndMask(mask);
-            var maskOr = MakeOrMask(mask);
+            var mask = new string('X', 36);
+            long maskAnd = MakeAndMask(mask);
+            long maskOr = MakeOrMask(mask);
 
-            foreach (string s in _data)
+            foreach (var parts in _data.Select
+                (s => s.Split('=', StringSplitOptions.RemoveEmptyEntries)
+                       .ToList().Select(s2 => s2.Trim()).ToList())
+                )
             {
-                var parts = s.Split('=', StringSplitOptions.RemoveEmptyEntries)
-                             .ToList().Select(s => s.Trim()).ToList();
                 if (parts[0] == "mask")
                 {
                     mask = parts[1];
@@ -52,15 +50,15 @@ namespace AdventOfCode2020Solver.Solvers
 
             return $"{total}";        }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             _memory.Clear();
-            var mask = "000000000000000000000000000000000000";
+            var mask = new string('0', 36);
 
             foreach (var parts in _data.Select
                 (
                  s => s.Split('=', StringSplitOptions.RemoveEmptyEntries)
-                       .ToList().Select(s => s.Trim()).ToList()
+                       .ToList().Select(s2 => s2.Trim()).ToList()
                 ))
             {
                 if (parts[0] == "mask")
@@ -81,9 +79,9 @@ namespace AdventOfCode2020Solver.Solvers
 
         private  void ModifyMemory(string part, string s, in long maskAnd, in long maskOr)
         {
-            var parts = part.Split(new[] {'[', ']'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = part.Split(new[] {'[', ']'}, StringSplitOptions.RemoveEmptyEntries);
             var address = Convert.ToInt64(parts[1]);
-            var value = (Convert.ToInt64(s) & maskAnd) | maskOr;
+            long value = (Convert.ToInt64(s) & maskAnd) | maskOr;
 
             _memory[address] = value;
         }
@@ -99,8 +97,6 @@ namespace AdventOfCode2020Solver.Solvers
 	        {
 		        _memory[tempAddress] = value;
 	        }
-
-	        var k = 0;
         }
 
         private  List<string> MakeAddresses(string mask, long baseAddress)

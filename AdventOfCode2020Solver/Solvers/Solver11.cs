@@ -10,7 +10,6 @@ namespace AdventOfCode2020Solver.Solvers
 {
     public class Solver11 : AbstractAocSolver, IAocSolver
     {
-        
         private static readonly List<Coordinate> Offsets =
             new List<Coordinate>
             {
@@ -24,7 +23,7 @@ namespace AdventOfCode2020Solver.Solvers
                 new Coordinate(1, 1)
             };
 
-        public List<string> BaseSeats;
+        private List<string> _baseSeats;
 
         public Solver11(int n) : base(n) { }
 
@@ -41,22 +40,18 @@ namespace AdventOfCode2020Solver.Solvers
                 data[i] = $".{data[i]}.";
             }
 
-            BaseSeats = new List<string>(data);
-            
-            
+            _baseSeats = new List<string>(data);
+
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
 	        int oldCount;
 	        var newCount = 0;
 
-	        var solverBaseSeats = new List<string>(BaseSeats);
+	        var solverBaseSeats = new List<string>(_baseSeats);
 	        do
 	        {
 		        oldCount = newCount;
@@ -69,12 +64,12 @@ namespace AdventOfCode2020Solver.Solvers
 
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
 	        int oldCount;
 	        var newCount = 0;
 
-	        var solverBaseSeats = new List<string>(BaseSeats);
+	        var solverBaseSeats = new List<string>(_baseSeats);
 	        do
 	        {
 		        oldCount = newCount;

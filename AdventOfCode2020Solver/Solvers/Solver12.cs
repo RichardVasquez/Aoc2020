@@ -7,26 +7,24 @@ using AdventOfCode2020Solver.Solvers.Library;
 
 namespace AdventOfCode2020Solver.Solvers
 {
-	public class Solver12 : AbstractAocSolver, IAocSolver
+	public class Solver12 : AbstractAocSolver
 	{
-		public List<string> Movements;
+		private List<string> _movements;
+
 		public Solver12(int n) : base(n) { }
 
 		public override void Solve()
 		{
-			Movements = ProblemData.Get().ToLines(true).ToList();
+			_movements = ProblemData.Get().ToLines(true).ToList();
 			
 			SolveOnce(SolvePart1);
 			SolveOnce(SolvePart2);
-
-			Console.WriteLine(SolvePart1());
-			Console.WriteLine(SolvePart2());
 		}
 
-		private string SolvePart1()
+		public override string SolvePart1()
 		{
 			var ship = new Ship();
-			foreach (string cmd in Movements)
+			foreach (string cmd in _movements)
 			{
 				ship.Move(cmd);
 			}
@@ -34,10 +32,10 @@ namespace AdventOfCode2020Solver.Solvers
 			return $"{ship.Manhattan}";
 		}
 
-		private string SolvePart2()
+		public override string SolvePart2()
 		{
 			var ship = new Ship2();
-			foreach (string cmd in Movements)
+			foreach (string cmd in _movements)
 			{
 				ship.Move(cmd);
 			}
@@ -45,15 +43,15 @@ namespace AdventOfCode2020Solver.Solvers
 			return $"{ship.Manhattan}";
 		}
 
-		public class Ship
+		private class Ship
 		{
-			public Headings Heading;
-			public int X;
-			public int Y;
+			private Headings _heading;
+			private int _x;
+			private int _y;
 
-			public int Manhattan => Math.Abs(X) + Math.Abs(Y);
+			public int Manhattan => Math.Abs(_x) + Math.Abs(_y);
 
-			public Dictionary<Headings, List<Headings>> LeftRotate =
+			private readonly Dictionary<Headings, List<Headings>> _leftRotate =
 				new Dictionary<Headings, List<Headings>>
 				{
 					{Headings.North, new List<Headings> {Headings.North, Headings.West, Headings.South, Headings.East}},
@@ -62,7 +60,7 @@ namespace AdventOfCode2020Solver.Solvers
 					{Headings.East, new List<Headings> {Headings.East, Headings.North, Headings.West, Headings.South}}
 				};
 
-			public Dictionary<Headings, List<Headings>> RightRotate =
+			private readonly Dictionary<Headings, List<Headings>> _rightRotate =
 				new Dictionary<Headings, List<Headings>>
 				{
 					{Headings.North, new List<Headings> {Headings.North, Headings.East, Headings.South, Headings.West}},
@@ -71,7 +69,7 @@ namespace AdventOfCode2020Solver.Solvers
 					{Headings.West, new List<Headings> {Headings.West, Headings.North, Headings.East, Headings.South}}
 				};
 
-			public Dictionary<Headings, Coordinate> MyVectors =
+			private readonly Dictionary<Headings, Coordinate> _myVectors =
 				new Dictionary<Headings, Coordinate>
 				{
 					{Headings.North, new Coordinate(0, 1)},
@@ -82,9 +80,9 @@ namespace AdventOfCode2020Solver.Solvers
 
 			public Ship()
 			{
-				X = 0;
-				Y = 0;
-				Heading = Headings.East;
+				_x = 0;
+				_y = 0;
+				_heading = Headings.East;
 			}
 
 			public void Move(string instruction)
@@ -95,22 +93,22 @@ namespace AdventOfCode2020Solver.Solvers
 				switch (operation)
 				{
 					case 'N':
-						Y += number;
+						_y += number;
 						break;
 					case 'S':
-						Y -= number;
+						_y -= number;
 						break;
 					case 'E':
-						X += number;
+						_x += number;
 						break;
 					case 'W':
-						X -= number;
+						_x -= number;
 						break;
 					case 'L':
-						Heading = RotateLeft(number);
+						_heading = RotateLeft(number);
 						break;
 					case 'R':
-						Heading = RotateRight(number);
+						_heading = RotateRight(number);
 						break;
 					case 'F':
 						MoveForward(number);
@@ -120,9 +118,9 @@ namespace AdventOfCode2020Solver.Solvers
 
 			private void MoveForward(int number)
 			{
-				var entry = MyVectors[Heading];
-				X += number * entry.X;
-				Y += number * entry.Y;
+				var entry = _myVectors[_heading];
+				_x += number * entry.X;
+				_y += number * entry.Y;
 			}
 
 			private Headings RotateRight(int number)
@@ -135,7 +133,7 @@ namespace AdventOfCode2020Solver.Solvers
 				number %= 360;
 				number /= 90;
 
-				return RightRotate[Heading][number];
+				return _rightRotate[_heading][number];
 			}
 
 			private Headings RotateLeft(int number)
@@ -148,53 +146,22 @@ namespace AdventOfCode2020Solver.Solvers
 				number %= 360;
 				number /= 90;
 
-				return LeftRotate[Heading][number];
+				return _leftRotate[_heading][number];
 			}
 		}
 
-
-		public class Ship2
+		private class Ship2
 		{
-			private Headings Heading;
+			private Coordinate _location;
+			private Coordinate _waypoint;
 
-			private Coordinate Location;
-			private Coordinate Waypoint;
+			public int Manhattan => Math.Abs(_location.X) + Math.Abs(_location.Y);
 
-			public int Manhattan => Math.Abs(Location.X) + Math.Abs(Location.Y);
-
-			public Dictionary<Headings, List<Headings>> LeftRotate =
-				new Dictionary<Headings, List<Headings>>
-				{
-					{Headings.North, new List<Headings> {Headings.North, Headings.West, Headings.South, Headings.East}},
-					{Headings.West, new List<Headings> {Headings.West, Headings.South, Headings.East, Headings.North}},
-					{Headings.South, new List<Headings> {Headings.South, Headings.East, Headings.North, Headings.West}},
-					{Headings.East, new List<Headings> {Headings.East, Headings.North, Headings.West, Headings.South}}
-				};
-
-			public Dictionary<Headings, List<Headings>> RightRotate =
-				new Dictionary<Headings, List<Headings>>
-				{
-					{Headings.North, new List<Headings> {Headings.North, Headings.East, Headings.South, Headings.West}},
-					{Headings.East, new List<Headings> {Headings.East, Headings.South, Headings.West, Headings.North}},
-					{Headings.South, new List<Headings> {Headings.South, Headings.West, Headings.North, Headings.East}},
-					{Headings.West, new List<Headings> {Headings.West, Headings.North, Headings.East, Headings.South}}
-				};
-
-			public Dictionary<Headings, Coordinate> MyVectors =
-				new Dictionary<Headings, Coordinate>
-				{
-					{Headings.North, new Coordinate(0, 1)},
-					{Headings.South, new Coordinate(0, -1)},
-					{Headings.East, new Coordinate(1, 0)},
-					{Headings.West, new Coordinate(-1, 0)},
-				};
 
 			public Ship2()
 			{
-				Location = new Coordinate(0, 0);
-				Waypoint = new Coordinate(10, 1);
-
-				Heading = Headings.East;
+				_location = new Coordinate(0, 0);
+				_waypoint = new Coordinate(10, 1);
 			}
 
 			public void Move(string instruction)
@@ -205,16 +172,16 @@ namespace AdventOfCode2020Solver.Solvers
 				switch (operation)
 				{
 					case 'N':
-						Waypoint = new Coordinate(Waypoint.X, Waypoint.Y + number);
+						_waypoint = new Coordinate(_waypoint.X, _waypoint.Y + number);
 						break;
 					case 'S':
-						Waypoint = new Coordinate(Waypoint.X, Waypoint.Y - number);
+						_waypoint = new Coordinate(_waypoint.X, _waypoint.Y - number);
 						break;
 					case 'E':
-						Waypoint = new Coordinate(Waypoint.X+number, Waypoint.Y);
+						_waypoint = new Coordinate(_waypoint.X+number, _waypoint.Y);
 						break;
 					case 'W':
-						Waypoint = new Coordinate(Waypoint.X-number, Waypoint.Y);
+						_waypoint = new Coordinate(_waypoint.X-number, _waypoint.Y);
 						break;
 					case 'L':
 						RotateLeft(number);
@@ -225,18 +192,16 @@ namespace AdventOfCode2020Solver.Solvers
 					case 'F':
 						MoveForward(number);
 						break;
-					default:
-						break;
 				}
 			}
 
 			private void MoveForward(int number)
 			{
-				var distX = Waypoint.X - Location.X;
-				var distY = Waypoint.Y - Location.Y;
+				int distX = _waypoint.X - _location.X;
+				int distY = _waypoint.Y - _location.Y;
 
-				Location = new Coordinate(Location.X + distX * number, Location.Y + distY * number);
-				Waypoint = new Coordinate(Location.X + distX, Location.Y + distY);
+				_location = new Coordinate(_location.X + distX * number, _location.Y + distY * number);
+				_waypoint = new Coordinate(_location.X + distX, _location.Y + distY);
 			}
 
 			private void RotateRight(int number)
@@ -250,15 +215,15 @@ namespace AdventOfCode2020Solver.Solvers
 				number /= 90;
 
 				//	offsets from ship as origin
-				int distX = Waypoint.X - Location.X;
-				int distY = Waypoint.Y - Location.Y;
+				int distX = _waypoint.X - _location.X;
+				int distY = _waypoint.Y - _location.Y;
 
-				Waypoint = number switch
+				_waypoint = number switch
 				{
-					3 => new Coordinate(Location.X - distY, Location.Y + distX),
-					2 => new Coordinate(Location.X - distX, Location.Y - distY),
-					1 => new Coordinate(Location.X + distY, Location.Y - distX),
-					_ => Waypoint
+					3 => new Coordinate(_location.X - distY, _location.Y + distX),
+					2 => new Coordinate(_location.X - distX, _location.Y - distY),
+					1 => new Coordinate(_location.X + distY, _location.Y - distX),
+					_ => _waypoint
 				};
 			}
 
@@ -273,20 +238,20 @@ namespace AdventOfCode2020Solver.Solvers
 				number /= 90;
 
 				//	offsets from ship as origin
-				int distX = Waypoint.X - Location.X;
-				int distY = Waypoint.Y - Location.Y;
+				int distX = _waypoint.X - _location.X;
+				int distY = _waypoint.Y - _location.Y;
 
-				Waypoint = number switch
+				_waypoint = number switch
 				{
-					1 => new Coordinate(Location.X - distY, Location.Y + distX),
-					2 => new Coordinate(Location.X - distX, Location.Y - distY),
-					3 => new Coordinate(Location.X + distY, Location.Y - distX),
-					_ => Waypoint
+					1 => new Coordinate(_location.X - distY, _location.Y + distX),
+					2 => new Coordinate(_location.X - distX, _location.Y - distY),
+					3 => new Coordinate(_location.X + distY, _location.Y - distX),
+					_ => _waypoint
 				};
 			}
 		}
 
-		public enum Headings
+		private enum Headings
 		{
 			North,
 			East,

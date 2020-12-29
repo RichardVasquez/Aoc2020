@@ -6,7 +6,7 @@ using AdventOfCode2020Solver.Solvers.Library;
 
 namespace AdventOfCode2020Solver.Solvers
 {
-    public class Solver13 : AbstractAocSolver, IAocSolver
+    public class Solver13 : AbstractAocSolver
     {
         private long _startTime;
         private List<string> _possibles;
@@ -21,12 +21,9 @@ namespace AdventOfCode2020Solver.Solvers
             
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             var validId =
                 (from possible in _possibles
@@ -57,7 +54,7 @@ namespace AdventOfCode2020Solver.Solvers
             return $"{bus*minutes}";
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             long time = 0;
             var increment = Convert.ToInt64(_possibles[0]);

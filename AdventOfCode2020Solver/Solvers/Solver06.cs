@@ -9,7 +9,7 @@ namespace AdventOfCode2020Solver.Solvers
     public class Solver06 : AbstractAocSolver, IAocSolver
     {
         private List<CustomsForm> _forms;
-        
+
         public Solver06(int n) : base(n) { }
 
         public override void Solve()
@@ -17,17 +17,14 @@ namespace AdventOfCode2020Solver.Solvers
             _forms = ProblemData.Get().ToBlobs().Select(cf => new CustomsForm(cf)).ToList();
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             return _forms.Select(c => c.DistinctQuestions).Sum().ToString();
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             return _forms.Select(c => c.AllMatchedQuestions).Sum().ToString();
         }

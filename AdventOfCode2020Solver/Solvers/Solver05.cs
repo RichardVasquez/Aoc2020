@@ -6,9 +6,10 @@ using AdventOfCode2020Solver.Solvers.Library;
 
 namespace AdventOfCode2020Solver.Solvers
 {
-    public class Solver05 : AbstractAocSolver, IAocSolver
+    public class Solver05 : AbstractAocSolver
     {
         private List<int> _seats;
+
         public Solver05(int n) : base(n) { }
 
         public override void Solve()
@@ -26,17 +27,14 @@ namespace AdventOfCode2020Solver.Solvers
 
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             return _seats.Max().ToString();
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             long pyramid = _seats.Last() * (_seats.Last() + 1) / 2 -
                            (_seats.First() - 1) * _seats.First() / 2;

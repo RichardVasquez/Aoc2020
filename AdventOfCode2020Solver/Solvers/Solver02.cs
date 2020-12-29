@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using AdventOfCode.Library;
@@ -11,6 +10,7 @@ namespace AdventOfCode2020Solver.Solvers
     {
         private List<List<string>> _passwordData;
 
+
         public Solver02(int i) : base(i) { }
         public override void Solve()
         {
@@ -20,11 +20,9 @@ namespace AdventOfCode2020Solver.Solvers
 
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             return
                 (
@@ -38,7 +36,7 @@ namespace AdventOfCode2020Solver.Solvers
                     select count1).Count().ToString();
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             return
                 (

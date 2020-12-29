@@ -27,6 +27,15 @@ namespace AdventOfCode2020Solver.Solvers
                 {14, typeof(Solver14)},
                 {15, typeof(Solver15)},
                 {16, typeof(Solver16)},
+                {17, typeof(Solver17)},
+                {18, typeof(Solver18)},
+                {19, typeof(Solver19)},
+                {20, typeof(Solver20)},
+                {21, typeof(Solver21)},
+                {22, typeof(Solver22)},
+                {23, typeof(Solver23)},
+                {24, typeof(Solver24)},
+                {25, typeof(Solver25)},
             };
 
         private static readonly Dictionary<int, Type> DataLookup =
@@ -48,6 +57,45 @@ namespace AdventOfCode2020Solver.Solvers
                 {14, typeof(Data14)},
                 {15, typeof(Data15)},
                 {16, typeof(Data16)},
+                {17, typeof(Data17)},
+                {18, typeof(Data18)},
+                {19, typeof(Data19)},
+                {20, typeof(Data20)},
+                {21, typeof(Data21)},
+                {22, typeof(Data22)},
+                {23, typeof(Data23)},
+                {24, typeof(Data24)},
+                {25, typeof(Data25)},
+            };
+
+        private static readonly Dictionary<int, string> Title =
+            new Dictionary<int, string>
+            {
+                {1, "Report Repair"},
+                {2, "Password Philosophy"},
+                {3, "Toboggan Trajectory"},
+                {4, "Passport Processing"},
+                {5, "Binary Boarding"},
+                {6, "Custom Customs"},
+                {7, "Handy Haversacks"},
+                {8, "Handheld Halting"},
+                {9, "Encoding Error"},
+                {10, "Adapter Array"},
+                {11, "Seating System"},
+                {12, "Rain Risk"},
+                {13, "Shuttle Search"},
+                {14, "Docking Data"},
+                {15, "Rambunctious Recitation"},
+                {16, "Ticket Translation"},
+                {17, "Conway Cubes"},
+                {18, "Operation Order"},
+                {19, "Monster Messages"},
+                {20, "Jurassic Jigsaw"},
+                {21, "Allergen Assessment"},
+                {22, "Crab Combat"},
+                {23, "Crab Cups"},
+                {24, "Lobby Layout"},
+                {25, "Combo Breaker"}
             };
 
         public static int ProblemMin => ProblemLookup.Keys.Min();
@@ -97,6 +145,7 @@ namespace AdventOfCode2020Solver.Solvers
                      index
                     );
             solver.AddData(data);
+            solver.SetTitle(Title[index]);
             return solver;
         }
     }

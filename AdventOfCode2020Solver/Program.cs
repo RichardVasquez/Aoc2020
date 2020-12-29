@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AdventOfCode2020Solver.Data;
 using AdventOfCode2020Solver.Internal;
 using AdventOfCode2020Solver.Solvers;
 
@@ -10,6 +9,7 @@ namespace AdventOfCode2020Solver
 {
     internal static class Program
     {
+        private static int _bannerWidth;
         private static void Main(string[] args)
         {
             var numbers = args.ToInts();
@@ -18,20 +18,33 @@ namespace AdventOfCode2020Solver
                 numbers = Enumerable.Range(SolverLookup.ProblemMin, SolverLookup.ProblemCount).ToList();
             }
 
-            var s4 = SolverLookup.GetSolver(15);
-            s4.Solve();
-
-            var d1 = new Data01();
-            
             Banner(numbers);
             Solve(numbers);
+            Footer();
+        }
+
+        private static void Footer()
+        {
+            Console.WriteLine(new string('-', _bannerWidth));
         }
 
         private static void Solve(List<int> numbers)
         {
+            foreach (var solver in numbers.Select(SolverLookup.GetSolver))
+            {
+                var recast = (AbstractAocSolver) solver;
+                Console.WriteLine($"{recast.Index, 3} - {recast.GetTitle()}");
 
-            var s = SolverLookup.GetSolver(1);
-            var k = 0;
+                solver.Solve();
+                var data = solver.GetResults();
+                for (int i = 0; i < data.Count; i += 2)
+                {
+                    Console.WriteLine($"\t{data[i]}");
+                    Console.WriteLine($"\t{data[i + 1]} milliseconds");
+                }
+
+                Console.WriteLine();
+            }
         }
 
         /// <summary>
@@ -83,7 +96,9 @@ namespace AdventOfCode2020Solver
             {
                 Console.WriteLine($"     {s}");
             }
-            Console.WriteLine(new string('-',bannerWidth));
+
+            Console.WriteLine(new string('-', bannerWidth));
+            _bannerWidth = bannerWidth;
         }
     }
 }

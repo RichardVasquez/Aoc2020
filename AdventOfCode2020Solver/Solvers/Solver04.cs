@@ -24,11 +24,9 @@ namespace AdventOfCode2020Solver.Solvers
             
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             var validFields = new List<string>(Fields).Where(f => f != "cid");
 
@@ -52,7 +50,7 @@ namespace AdventOfCode2020Solver.Solvers
             return $"{total}";
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             var validFields = new List<string>(Fields).Where(f => f != "cid");
 

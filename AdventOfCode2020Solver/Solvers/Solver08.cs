@@ -9,36 +9,34 @@ namespace AdventOfCode2020Solver.Solvers
 {
     public class Solver08 : AbstractAocSolver, IAocSolver
     {
-        public List<Instruction> BaseInstructions; 
+        private List<Instruction> _baseInstructions;
+
         public Solver08(int n) : base(n) { }
 
         public override void Solve()
         {
-            BaseInstructions = ProblemData.Get().ToLines(true)
+            _baseInstructions = ProblemData.Get().ToLines(true)
                                           .Select(k => new Instruction(k)).ToList();
             
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
-            var game = new Machine(BaseInstructions);
+            var game = new Machine(_baseInstructions);
             game.Run();
             return $"{game.Accumulator}";
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             var accumulator = 0;
-            for (var i = 0; i < BaseInstructions.Count; i++)
+            for (var i = 0; i < _baseInstructions.Count; i++)
             {
-                var edited = new List<Instruction>(BaseInstructions)
+                var edited = new List<Instruction>(_baseInstructions)
                              {
-                                 [i] = SwapInstruction(BaseInstructions[i])
+                                 [i] = SwapInstruction(_baseInstructions[i])
                              };
 
                 var game = new Machine(edited);
@@ -64,7 +62,6 @@ namespace AdventOfCode2020Solver.Solvers
                 _ => i
             };
         }
-
 
         public struct Instruction
         {

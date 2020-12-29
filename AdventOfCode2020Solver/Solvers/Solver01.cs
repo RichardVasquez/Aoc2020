@@ -19,12 +19,9 @@ namespace AdventOfCode2020Solver.Solvers
 
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             foreach (long index in _numbers.Where(idx => _numbers.Contains(BaseValue - idx)))
             {
@@ -34,7 +31,7 @@ namespace AdventOfCode2020Solver.Solvers
             return "Not Found";
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             foreach (long index1 in _numbers)
             {
@@ -50,6 +47,5 @@ namespace AdventOfCode2020Solver.Solvers
 
             return "Not Found";
         }
-
     }
 }

@@ -16,11 +16,20 @@ namespace AdventOfCode2020Solver.Solvers
         public override void Solve()
         {
             _numbers = ProblemData.Get().ToTokens().Select(t => Convert.ToInt64(t)).ToList();
+
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
+        }
+
+        public override string SolvePart1()
+        {
+            return ActualSolver(2020);
+        }
+
+        [SuppressMessage("ReSharper.DPA", "DPA0003: Excessive memory allocations in LOH", MessageId = "type: Entry[System.Int64,System.Int64][]")]
+        public override string SolvePart2()
+        {
+            return ActualSolver(30000000);
         }
 
         private string ActualSolver(int limit)
@@ -54,17 +63,5 @@ namespace AdventOfCode2020Solver.Solvers
 	        
             return $"{final}";
         }
-        
-        private string SolvePart1()
-        {
-            return ActualSolver(2020);
-        }
-
-        [SuppressMessage("ReSharper.DPA", "DPA0003: Excessive memory allocations in LOH", MessageId = "type: Entry[System.Int64,System.Int64][]")]
-        private string SolvePart2()
-        {
-            return ActualSolver(30000000);
-        }
-
     }
 }

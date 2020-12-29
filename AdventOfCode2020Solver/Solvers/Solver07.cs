@@ -10,7 +10,7 @@ namespace AdventOfCode2020Solver.Solvers
     public class Solver07 : AbstractAocSolver
     {
         private List<Bag> _bags;
-        
+
         public Solver07(int n) : base(n) { }
 
         public override void Solve()
@@ -49,16 +49,12 @@ namespace AdventOfCode2020Solver.Solvers
                     targetBag?.AddContainer(bag);
                 }
             }
-
             
             SolveOnce(SolvePart1);
             SolveOnce(SolvePart2);
-            
-            Console.WriteLine(SolvePart1());
-            Console.WriteLine(SolvePart2());
         }
 
-        private string SolvePart1()
+        public override string SolvePart1()
         {
             var node = _bags.Find(n => n.Name == "shiny gold");
 
@@ -95,7 +91,7 @@ namespace AdventOfCode2020Solver.Solvers
             return donePool.Count.ToString();
         }
 
-        private string SolvePart2()
+        public override string SolvePart2()
         {
             var node = _bags.Find(n => n.Name == "shiny gold");
             return node != null
