@@ -1,4 +1,4 @@
-# Advent of Code 2020 Solvers
+# [Advent of Code 2020](https://adventofcode.com/2020) Solvers
 
 This is the third year I've tried doing Advent of Code, and this is the first year I've completed it.  I
 had a little help, specifically using the [Sprache](https://github.com/sprache/Sprache) parser builder
